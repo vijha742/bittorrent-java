@@ -1,5 +1,5 @@
 import com.google.gson.Gson;
-import com.dampcake.bencode.Bencode;// - available if you need it!
+// import com.dampcake.bencode.Bencode;// - available if you need it!
 
 public class Main {
   private static final Gson gson = new Gson();
@@ -37,9 +37,23 @@ public class Main {
       }
       int length = Integer.parseInt(bencodedString.substring(0, firstColonIndex));
       return bencodedString.substring(firstColonIndex+1, firstColonIndex+1+length);
-    } else {
-      throw new RuntimeException("Only strings are supported at the moment");
+    } else if(bencodedString.charAt(0) == 'i') {
+      if(bencodedString.charAt(1) == '0' && bencodedString.charAt(2) != 'e') {
+        return "Invalid Input";
+      }
+      if(bencodedString.charAt(1) == '-' && bencodedString.charAt(2) == '0') {
+        return "Invalid Input";
+      }
+      int enddelimiter = 1;
+      for(int i =0; i< bencodedString.length(); i++) {
+        if(bencodedString.charAt(i) == 'e') {
+          enddelimiter = i;
+          break;
+        }
+      }
+      return bencodedString.substring(1,enddelimiter);
+      }else {
+        throw new RuntimeException("Only strings and integers are supported at the moment");
+    }
     }
   }
-  
-}
