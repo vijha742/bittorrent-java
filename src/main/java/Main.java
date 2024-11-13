@@ -51,7 +51,8 @@ public class Main {
           break;
         }
       }
-      return bencodedString.substring(1,enddelimiter);
+      String input = bencodedString.substring(1,enddelimiter);
+      return input.replace("\"", "");
       }else {
         throw new RuntimeException("Only strings and integers are supported at the moment");
     }
