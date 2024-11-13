@@ -11,7 +11,7 @@ public class Main {
     if("decode".equals(command)) {
 //      Uncomment this block to pass the first stage
       String bencodedValue = args[1];
-      String decoded;
+      Object decoded;
       try {
       decoded = decodeBencode(bencodedValue);
       } catch(RuntimeException e) {
@@ -26,7 +26,7 @@ public class Main {
 
   }
 
-  static String decodeBencode(String bencodedString) {
+  static Object decodeBencode(String bencodedString) {
     if (Character.isDigit(bencodedString.charAt(0))) {
       int firstColonIndex = 0;
       for(int i = 0; i < bencodedString.length(); i++) { 
@@ -51,8 +51,7 @@ public class Main {
           break;
         }
       }
-      String input = bencodedString.substring(1,enddelimiter);
-      return input.replace("\"", "");
+      return Long.parseLong(bencodedString.substring(1,enddelimiter));
       }else {
         throw new RuntimeException("Only strings and integers are supported at the moment");
     }
